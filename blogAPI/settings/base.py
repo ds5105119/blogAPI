@@ -291,3 +291,6 @@ REST_AUTH = {
 BlogAPI = {
     'UserPostWritable': True
 }
+
+FRONT_URL = env('FRONT_URL')
+GOOGLE_REDIRECT_URI = FRONT_URL + env('GOOGLE_REDIRECT_URI')

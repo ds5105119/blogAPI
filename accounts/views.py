@@ -4,6 +4,7 @@ from accounts.permissions import FollowPermission, HandelPermission
 from accounts.serialziers import CustomSocialLoginSerializer, FollowerSerializer, FollowingSerializer, UserSerializer
 
 try:
+    from django.conf import settings
     from django.shortcuts import get_object_or_404
     from rest_framework import status, mixins, generics, viewsets
     from rest_framework.exceptions import ValidationError
@@ -15,10 +16,6 @@ try:
     from rest_framework.permissions import AllowAny
 except ImportError:
     raise ImportError('django, django-rest-framework, allauth, dj-rest-accounts needs to be added to INSTALLED_APPS.')
-
-
-BASE_URL = 'http://localhost:8000/'
-GOOGLE_CALLBACK_URI = BASE_URL + 'accounts/google/login/callback/'
 
 
 class UserFollowingViewSet(mixins.CreateModelMixin,
@@ -116,7 +113,7 @@ def forward_google_login(code):
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    callback_url = GOOGLE_CALLBACK_URI
+    callback_url = settings.env('GOOGLE_REDIRECT_URI')
     client_class = OAuth2Client
     serializer_class = CustomSocialLoginSerializer
 

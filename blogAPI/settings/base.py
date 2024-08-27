@@ -279,7 +279,7 @@ SOCIALACCOUNT_STORE_TOKENS = False                          # SOCIALACCOUNT_EMAI
 
 REST_AUTH = {
     'USE_JWT': True,                                        # dj_rest_auth.views.LoginView use JWT
-    'JWT_AUTH_HTTPONLY': True,
+    'JWT_AUTH_HTTPONLY': False,
     'JWT_AUTH_COOKIE': "AUTH",
     'JWT_AUTH_REFRESH_COOKIE': "REFRESH",
     'JWT_AUTH_COOKIE_USE_CSRF': True,
@@ -292,5 +292,6 @@ BlogAPI = {
     'UserPostWritable': True
 }
 
+BASE_URL = env('BASE_URL')
 FRONT_URL = env('FRONT_URL')
 GOOGLE_REDIRECT_URI = FRONT_URL + env('GOOGLE_REDIRECT_URI')

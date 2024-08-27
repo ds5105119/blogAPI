@@ -104,7 +104,7 @@ class UserHandelCreateView(APIView):
 
 
 def forward_google_login(code):
-    url = BASE_URL + 'accounts/google/login/'
+    url = getattr(settings, 'GOOGLE_REDIRECT_URI')
     payload = {"code": code}
     headers = {"Content-Type": "application/json"}
     response = requests.post(url, json=payload, headers=headers)
@@ -113,7 +113,7 @@ def forward_google_login(code):
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    callback_url = settings.env('GOOGLE_REDIRECT_URI')
+    callback_url = settings.GOOGLE_REDIRECT_URI
     client_class = OAuth2Client
     serializer_class = CustomSocialLoginSerializer
 

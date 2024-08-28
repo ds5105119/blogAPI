@@ -15,7 +15,6 @@ CORS_ALLOW_CREDENTIALS = True
 REST_AUTH = {
     'USE_JWT': True,                                        # dj_rest_auth.views.LoginView use JWT
     'JWT_AUTH_HTTPONLY': False,
-    'JWT_AUTH_COOKIE': "AUTH",
     'JWT_AUTH_REFRESH_COOKIE': "REFRESH",
     'JWT_AUTH_COOKIE_USE_CSRF': False,
 }

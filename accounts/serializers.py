@@ -1,4 +1,4 @@
-from accounts.models import User, Profile, Follow
+from accounts.models import User
 
 try:
     from rest_framework import serializers
@@ -9,50 +9,10 @@ except ImportError:
     raise ImportError('django, django-rest-framework, dj-rest-accounts needs to be added to INSTALLED_APPS.')
 
 
-class FollowerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Follow
-        fields = ('follower', 'created_at')
-        read_only_fields = ['follower', 'created_at']
-
-
-class FollowingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Follow
-        fields = ('user', 'created_at')
-        read_only_fields = ['user', 'created_at']
-
-
 class UserSerializer(serializers.ModelSerializer):
-    following = serializers.SerializerMethodField()
-    followers = serializers.SerializerMethodField()
-
     class Meta:
         model = User
-        fields = ('handel',
-                  'username',
-                  'email',
-                  'following',
-                  'followers')
-
-    def get_following(self, obj):
-        return FollowingSerializer(obj.following.all(), many=True).data
-
-    def get_followers(self, obj):
-        return FollowerSerializer(obj.followers.all(), many=True).data
-
-
-class UserIDSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('handel', )
-
-    def validate(self, attrs):
-        if 'handel' not in attrs:
-            raise serializers.ValidationError({"error": "handel not provided"})
-        if User.objects.filter(id=attrs['handel']).exists():
-            raise serializers.ValidationError({"error": "This ID already exists."})
-        return attrs
+        fields = ('handle', 'username', 'email', 'created_at', 'updated_at', 'is_staff')
 
 
 class CustomSocialLoginSerializer(SocialLoginSerializer):

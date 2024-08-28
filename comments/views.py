@@ -1,5 +1,5 @@
 from .models import Comment, Reply
-from .serialziers import CommentSerializer, ReplySerializer
+from .serializers import CommentSerializer, ReplySerializer
 from api.permissions import UserReplyPermission
 
 from django_filters.rest_framework import DjangoFilterBackend

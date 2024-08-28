@@ -1,7 +1,9 @@
 from accounts.managers import UserManager
+from follows.models import Follow
 
 try:
     from django.db import models
+    from django.db.models import Subquery, OuterRef
     from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 except ImportError:
     raise ImportError('django needs to be added to INSTALLED_APPS.')
@@ -14,7 +16,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser is defined by PermissionMixin
     """
     # User Field
-    handel = models.CharField(max_length=30, unique=True, null=True, blank=False)
+    handle = models.CharField(max_length=30, unique=True, null=True, blank=False)
     username = models.CharField(max_length=30, null=False, blank=False)
     email = models.EmailField(max_length=30, unique=True, null=False, blank=False)
 
@@ -26,31 +28,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'handel'
+    USERNAME_FIELD = 'handle'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
 
     class Meta:
         db_table = 'user'
-
-
-class Profile(models.Model):
-    """
-    Custom Profile model
-    """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    bio = models.TextField(blank=True)
-    profile_image = models.URLField(max_length=500, null=False, blank=False)
-
-
-class Follow(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        constraints = [models.UniqueConstraint(fields=['user', 'follower'], name="unique_followers")]
-        ordering = ["-created_at"]
-
-    def __str__(self):
-        return f'{self.follower} follows {self.user}'

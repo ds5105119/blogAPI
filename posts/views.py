@@ -1,5 +1,5 @@
 from .models import Post
-from .serialziers import PostSerializer
+from .serializers import PostSerializer
 from .permissions import PostPermissions
 
 from rest_framework import generics, viewsets

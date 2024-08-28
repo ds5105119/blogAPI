@@ -1,5 +1,5 @@
 from accounts.models import User
-from accounts.utils import generate_handel
+from accounts.utils import generate_handle
 
 try:
     from allauth.utils import valid_email_or_none
@@ -36,12 +36,12 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         name = data.get("name") or extra_data.get("name")
         email = data.get("email") or extra_data.get("email")
         profile_image = extra_data.get("picture")
-        handel = generate_handel()
-        while User.objects.filter(handel=handel).exists():
-            handel = generate_handel()
+        handle = generate_handle()
+        while User.objects.filter(handle=handle).exists():
+            handle = generate_handle()
 
         user = sociallogin.user
         user.name = name or ""
         user_email(user, valid_email_or_none(email) or "")
-        user.handel = handel
+        user.handle = handle
         return user

@@ -14,10 +14,16 @@ try:
     from allauth.socialaccount.providers.oauth2.client import OAuth2Client
     from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 except ImportError:
-    raise ImportError('django, django-rest-framework, allauth, dj-rest-accounts needs to be added to INSTALLED_APPS.')
+    raise ImportError(
+        "django, django-rest-framework, allauth, dj-rest-accounts needs to be added to INSTALLED_APPS."
+    )
 
 
 class GoogleLogin(SocialLoginView):
+    """
+    allauth, dj-rest-auth social login view
+    """
+
     adapter_class = GoogleOAuth2Adapter
     callback_url = settings.GOOGLE_REDIRECT_URI
     client_class = OAuth2Client
@@ -26,24 +32,33 @@ class GoogleLogin(SocialLoginView):
 
 class UserHandleCreateView(APIView):
     """
-    POST /accounts/handle/: {handle: string} 본인의 핸들을 변경합니다.
+    POST /accounts/handle/: {handle: string} Change Owner's Handle
     """
-    permission_classes = (HandlePermission, )
+
+    permission_classes = (HandlePermission,)
 
     def post(self, request, *args, **kwargs):
-        handle = request.POST.get('handle', None)
+        handle = request.POST.get("handle", None)
         if not handle:
-            return Response({'error': 'handle not provided'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "handle not provided"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         if User.objects.filter(handle=handle).exists():
-            return Response({'error': 'User handle already exists'}, status=status.HTTP_409_CONFLICT)
+            return Response(
+                {"error": "User handle already exists"}, status=status.HTTP_409_CONFLICT
+            )
 
         return Response({}, status=status.HTTP_200_OK)
 
 
 class UserPagination(PageNumberPagination):
+    """
+    Pagination for UserViewSet
+    """
+
     page_size = 20
-    page_size_query_param = 'page_size'
+    page_size_query_param = "page_size"
     max_page_size = 20
 
 
@@ -54,11 +69,12 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     GET /accounts/users/?page_size=10: 페이지 크기를 10으로 설정하여 사용자 목록을 반환
     GET /accounts/users/{handle}/: 특정 handle을 가진 사용자의 상세 정보를 반환
     """
-    permission_classes = (AllowAny, )
+
+    permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = UserPagination
-    lookup_field = 'handle'
+    lookup_field = "handle"
 
     def get_object(self):
         queryset = self.get_queryset()

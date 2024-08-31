@@ -1,12 +1,17 @@
-from django.urls import path
-from profiles.views import ProfileView
+from profiles.views import ProfileViewSet, ProfileDetailView
 
 try:
-    from django.urls import path
+    from django.urls import path, include
+    from rest_framework.routers import DefaultRouter
 except ImportError:
-    raise ImportError('django needs to be added to INSTALLED_APPS.')
+    raise ImportError(
+        "django and django rest framework needs to be added to INSTALLED_APPS."
+    )
 
+
+router = DefaultRouter()
+router.register(r"", ProfileViewSet, basename="profile")
 
 urlpatterns = [
-    path('', ProfileView.as_view(), name="profile",),
+    path("detail/", ProfileDetailView.as_view(), name="profile-detail"),
 ]

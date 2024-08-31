@@ -1,4 +1,7 @@
-from rest_framework.permissions import BasePermission
+try:
+    from rest_framework.permissions import BasePermission
+except ImportError:
+    raise ImportError("django-rest-framework needs to be added to INSTALLED_APPS.")
 
 
 class HandlePermission(BasePermission):

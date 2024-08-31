@@ -6,7 +6,7 @@ try:
     from django.db.models import Subquery, OuterRef
     from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 except ImportError:
-    raise ImportError('django needs to be added to INSTALLED_APPS.')
+    raise ImportError("django needs to be added to INSTALLED_APPS.")
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -15,6 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     password, last_login, is_active are defined by AbstractBaseUser
     is_superuser is defined by PermissionMixin
     """
+
     # User Field
     handle = models.CharField(max_length=30, unique=True, null=True, blank=False)
     username = models.CharField(max_length=30, null=False, blank=False)
@@ -25,12 +26,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    follows_count = models.IntegerField(default=0)
+    followers_count = models.IntegerField(default=0)
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'handle'
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = "handle"
+    EMAIL_FIELD = "email"
+    REQUIRED_FIELDS = ["email"]
 
     class Meta:
-        db_table = 'user'
+        db_table = "user"

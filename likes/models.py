@@ -7,28 +7,19 @@ from django.conf import settings
 
 class PostLike(models.Model):
     post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ('post', 'user')
 
 
 class CommentLike(models.Model):
     comment = models.ForeignKey(Comment, related_name='likes', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ('comment', 'user')
 
 
 class ReplyLike(models.Model):
     reply = models.ForeignKey(Reply, related_name='likes', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ('reply', 'user')

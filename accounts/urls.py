@@ -20,5 +20,5 @@ urlpatterns = [
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", LogoutView.as_view(), name="rest_logout"),
     path("handle/", UserHandleCreateView.as_view(), name="handle"),
-    path("users", include(router.urls), name="user"),
+    path("", include(router.urls), name="user"),
 ]

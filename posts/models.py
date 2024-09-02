@@ -3,7 +3,23 @@ from .managers import PublishedManager
 
 from django.db import models
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
+from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
+
+
+class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
+    """
+    for uuid pk field
+    If you only inherit GenericUUIDTaggedItemBase, you need to define
+    a tag field. e.g.
+    tag = models.ForeignKey(Tag, related_name="uuid_tagged_items", on_delete=models.CASCADE)
+    See https://django-taggit.readthedocs.io/en/latest/custom_tagging.html#genericuuidtaggeditembase
+    """
+
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
 
 def get_undefined_category():
@@ -37,7 +53,7 @@ class Post(models.Model):
         ("suspended", "Suspended"),
     ]
 
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     views_count = models.IntegerField(default=0)
@@ -47,13 +63,13 @@ class Post(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="blog_posts"
     )
     category = models.ForeignKey(
-        Category, on_delete=models.SET(get_undefined_category), default=1
+        Category, on_delete=models.SET(get_undefined_category), null=True
     )
     status = models.CharField(max_length=20, choices=POST_STATUS, default="published")
     title = models.CharField(max_length=250)
     content = models.TextField()
     excerpt = models.TextField()
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, through=UUIDTaggedItem)
 
     objects = models.Manager()
     public_objects = PublishedManager()

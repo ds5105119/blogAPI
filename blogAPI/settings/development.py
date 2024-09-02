@@ -55,5 +55,11 @@ LOGGING = {
 # Elasticsearch configuration
 
 ELASTICSEARCH_DSL = {
-    "default": {"hosts": "localhost:9200"},
+    "default": {
+        "hosts": "https://127.0.0.1:9200",
+        "http_auth": (
+            env("ELASTICSEARCH_DSL_USERNAME"),
+            env("ELASTICSEARCH_DSL_PASSWORD"),
+        ),
+    }
 }

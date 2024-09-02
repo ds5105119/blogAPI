@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     "rest_framework",  # Django Rest Framework
     "rest_framework.authtoken",  # Django Rest Framework
     "django_elasticsearch_dsl",  # Django Elasticsearch integration
-    "django_elasticsearch_dsl_drf",  # Django REST framework Elasticsearch integration
     "django_filters",  # Django Rest Framework Filter
     "rest_framework_simplejwt",  # SimpleJWT
     "rest_framework_simplejwt.token_blacklist",  # SimpleJWT
@@ -191,9 +190,9 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_THROTTLE_RATES": {
         "dj_rest_auth": "10000/day",
-        "anon": "100/day",
-        "user": "300/h",
-        "GetPresignedUrlView": "200/day",
+        "anon": "10000/day",
+        "user": "30000/h",
+        "GetPresignedUrlView": "20000/day",
     },
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,

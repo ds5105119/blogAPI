@@ -6,6 +6,8 @@ from uuid import uuid4
 
 def get_presigned_url():
     """
+    ! Security Warning: DO NOT USE HARDCODED DATA
+    GET Expires in 2 min AWS S3 bucket presigned url
     :return: presigned post url
     """
     s3_client = boto3.client(
@@ -35,7 +37,7 @@ def get_presigned_url():
             Key=filename,
             Fields={"Content-Type": "image/jpeg"},
             Conditions=[{"Content-Type": "image/jpeg"}],
-            ExpiresIn=600,
+            ExpiresIn=120,
         )
 
         presigned_post["filename"] = filename

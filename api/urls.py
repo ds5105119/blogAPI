@@ -6,5 +6,4 @@ urlpatterns = [
     path("follows/", include("follows.urls")),
     path("comments/", include("comments.urls")),
     path("profiles/", include("profiles.urls")),
-    # path('likes/', include('likes.urls')),
 ]

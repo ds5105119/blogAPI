@@ -41,13 +41,16 @@ ADMIN_ENABLED = False  # for Turn on and off Admin
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+
+PROJECT_APPS = [
     "api",  # api app
     "search_indexes",  # Elasticsearch integration with the Django
     "accounts.apps.AccountsConfig",  # accounts app
@@ -56,6 +59,9 @@ INSTALLED_APPS = [
     "likes.apps.LikesConfig",  # likes app
     "posts.apps.PostsConfig",  # posts app
     "profiles.apps.ProfilesConfig",  # profiles app
+]
+
+THIRD_PARTY_APPS = [
     "taggit",  # django-taggit
     "corsheaders",  # django-cors-headers
     "rest_framework",  # Django Rest Framework
@@ -66,11 +72,14 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",  # SimpleJWT
     "dj_rest_auth",  # dj-rest-auth
     "dj_rest_auth.registration",  # dj-rest-auth
+    "drf_yasg",
     "allauth",  # allauth
     "allauth.account",  # allauth
     "allauth.socialaccount",  # allauth[socialaccount]
     "allauth.socialaccount.providers.google",  # allauth[socialaccount]
 ]
+
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # django-cors-headers

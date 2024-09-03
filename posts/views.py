@@ -1,6 +1,6 @@
 from .models import Post
 from .serializers import PostSerializer
-from .services import get_presigned_url
+from .services import get_presigned_post
 from .permissions import PostPermissions
 from accounts.models import User
 
@@ -34,7 +34,7 @@ class GetPresignedUrlView(APIView):
 
     def post(self, request):
         try:
-            presigned_url = get_presigned_url()
+            presigned_url = get_presigned_post()
             return Response(presigned_url)
         except Exception as e:
             return Response({"error": str(e)})

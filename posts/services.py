@@ -4,7 +4,7 @@ from django.conf import settings
 from uuid import uuid4
 
 
-def get_presigned_url():
+def get_presigned_post():
     """
     ! Security Warning: DO NOT USE HARDCODED DATA
     GET Expires in 2 min AWS S3 bucket presigned url

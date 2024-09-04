@@ -6,7 +6,6 @@ from posts.models import Category, Post
 from accounts.models import User
 
 
-"""
 @registry.register_document
 class PostDocument(Document):
     user = fields.ObjectField(
@@ -47,5 +46,3 @@ class PostDocument(Document):
         # Paginate the django queryset used to populate the index with the specified size
         # (by default it uses the database driver's default setting)
         # queryset_pagination = 5000
-
-"""

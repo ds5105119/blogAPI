@@ -22,7 +22,6 @@ django-nine==0.2.7
 django-storages==1.14.4
 django-taggit==6.0.0
 djangorestframework==3.15.2
-
 # Dependency pypi:djangorestframework-simplejwt:5.3.1 is vulnerable
 # CVE-2024-22513,  Score: 8.8
 # The djangorestframework-simplejwt is vulnerable to information disclosure.
@@ -31,7 +30,6 @@ djangorestframework==3.15.2
 # Read More: https://devhub.checkmarx.com/cve-details/CVE-2024-22513?utm_source=jetbrains&utm_medium=referral
 # Results powered by Checkmarx ©
 djangorestframework-simplejwt==5.3.1
-
 drf-yasg==1.21.7
 elastic-transport==8.15.0
 elasticsearch==8.15.0

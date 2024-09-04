@@ -11,6 +11,7 @@ rm -f "$PROJECT_ROOT/db.sqlite3"
 
 python manage.py makemigrations
 python manage.py migrate
+python manage.py search_index --rebuild
 python manage.py runserver
 
 echo "마이그레이션 초기화 완료"

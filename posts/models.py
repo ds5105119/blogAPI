@@ -54,22 +54,20 @@ class Post(models.Model):
     ]
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True)
-    views_count = models.IntegerField(default=0)
-    likes_count = models.IntegerField(default=0)
-
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="blog_posts"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="posts"
     )
     category = models.ForeignKey(
-        Category, on_delete=models.SET(get_undefined_category), null=True
+        Category, on_delete=models.SET(get_undefined_category), null=True, related_name="posts"
     )
     status = models.CharField(max_length=20, choices=POST_STATUS, default="published")
-    title = models.CharField(max_length=250)
-    content = models.TextField()
-    excerpt = models.TextField()
+    mdx = models.TextField()
+    text = models.TextField()
     tags = TaggableManager(blank=True, through=UUIDTaggedItem)
+    views_count = models.IntegerField(default=0)
+    likes_count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = models.Manager()
     public_objects = PublishedManager()
@@ -83,4 +81,4 @@ class Post(models.Model):
         ]
 
     def __str__(self):
-        return self.title
+        return self.text

@@ -6,7 +6,7 @@ from uuid import uuid4
 
 def get_presigned_post():
     """
-    ! Security Warning: DO NOT USE HARDCODED DATA
+    ! Security Warning: DO NOT USE HARDCODED DATA AND DO NOT CHANGE THE CODE
     GET Expires in 2 min AWS S3 bucket presigned url
     :return: presigned post url
     """
@@ -36,8 +36,8 @@ def get_presigned_post():
             Bucket=settings.AWS_STORAGE_BUCKET_NAME,
             Key=filename,
             Fields={"Content-Type": "image/jpeg"},
-            Conditions=[{"Content-Type": "image/jpeg"}],
-            ExpiresIn=120,
+            Conditions=[{"Content-Type": "image/jpeg"}, ["content-length-range", 1, 1024 * 200]],
+            ExpiresIn=60,
         )
 
         presigned_post["filename"] = filename

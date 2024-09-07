@@ -19,13 +19,12 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             "user",
             "category",
             "status",
-            "title",
-            "excerpt",
-            "content",
+            "mdx",
+            "text",
             "tags",
-            "created_at",
             "views_count",
             "likes_count",
+            "created_at",
         ]
 
     def get_user(self, obj):

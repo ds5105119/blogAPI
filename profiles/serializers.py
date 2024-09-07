@@ -1,4 +1,4 @@
-from accounts.serializers import UserSerializer
+from accounts.serializers import UserSelfSerializer, UserExternalSerializer
 from profiles.models import Profile
 
 try:
@@ -7,14 +7,29 @@ except ImportError:
     raise ImportError("django-rest-framework needs to be added to INSTALLED_APPS.")
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+class ProfileSelfSerializer(serializers.ModelSerializer):
+    user = UserSelfSerializer(read_only=True)
 
     class Meta:
         model = Profile
         fields = (
             "user",
             "bio",
-            "link",
+            "link_1",
+            "link_2",
+            "profile_image",
+        )
+
+
+class ProfileExternalSerializer(serializers.ModelSerializer):
+    user = UserExternalSerializer(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = (
+            "user",
+            "bio",
+            "link_1",
+            "link_2",
             "profile_image",
         )

@@ -17,12 +17,12 @@ except ImportError:
 
 
 class CustomPageNumberPagination(PageNumberPagination):
-    page_size = 50
+    page_size = 20
     page_size_query_param = "page_size"
-    max_page_size = 50
+    max_page_size = 20
 
 
-class ProfileDetailView(APIView):
+class PublicProfileDetailView(APIView):
     """
     POST /profiles/detail/: handle을 통해 해당 Profile을 반환.
     """

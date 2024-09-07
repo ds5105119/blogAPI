@@ -14,6 +14,7 @@ except ImportError:
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for the User model
+    FOR INTERNAL USE ONLY
     """
 
     class Meta:
@@ -25,6 +26,45 @@ class UserSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "is_staff",
+            "is_public",
+            "follows_count",
+            "followers_count",
+        )
+
+
+class UserSelfSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the User model
+    """
+
+    class Meta:
+        model = User
+        fields = (
+            "handle",
+            "username",
+            "email",
+            "created_at",
+            "updated_at",
+            "is_staff",
+            "is_public",
+            "follows_count",
+            "followers_count",
+        )
+
+
+class UserExternalSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the User model
+    """
+
+    class Meta:
+        model = User
+        fields = (
+            "handle",
+            "username",
+            "created_at",
+            "updated_at",
+            "is_public",
             "follows_count",
             "followers_count",
         )

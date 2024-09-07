@@ -72,7 +72,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt.token_blacklist",  # SimpleJWT
     "dj_rest_auth",  # dj-rest-auth
     "dj_rest_auth.registration",  # dj-rest-auth
-    "drf_yasg",
+    "drf_spectacular",
     "allauth",  # allauth
     "allauth.account",  # allauth
     "allauth.socialaccount",  # allauth[socialaccount]
@@ -203,6 +203,7 @@ REST_FRAMEWORK = {
         "user": "30000/h",
         "GetPresignedUrlView": "20000/day",
     },
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }
@@ -283,6 +284,14 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE": "access",
     "JWT_AUTH_REFRESH_COOKIE": "refresh_token",
     "JWT_AUTH_COOKIE_USE_CSRF": True,
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'IIH Blog API',
+    'DESCRIPTION': 'DRF, ElasticSearch Blog Backend',
+    'VERSION': '0.0.1',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 

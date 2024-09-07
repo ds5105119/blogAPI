@@ -1,4 +1,5 @@
 from accounts.models import User
+from accounts.paginators import UserPagination
 from accounts.permissions import HandlePermission
 from accounts.serializers import CustomSocialLoginSerializer, UserSerializer
 
@@ -6,7 +7,6 @@ try:
     from django.conf import settings
     from django.shortcuts import get_object_or_404
     from rest_framework import status, viewsets
-    from rest_framework.pagination import PageNumberPagination
     from rest_framework.permissions import AllowAny
     from rest_framework.response import Response
     from rest_framework.views import APIView
@@ -37,7 +37,7 @@ class UserHandleCreateView(APIView):
 
     permission_classes = (HandlePermission,)
 
-    def post(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         handle = request.POST.get("handle", None)
         if not handle:
             return Response(
@@ -50,16 +50,6 @@ class UserHandleCreateView(APIView):
             )
 
         return Response({}, status=status.HTTP_200_OK)
-
-
-class UserPagination(PageNumberPagination):
-    """
-    Pagination for UserViewSet
-    """
-
-    page_size = 20
-    page_size_query_param = "page_size"
-    max_page_size = 20
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):

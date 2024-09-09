@@ -19,7 +19,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && curl -sSL https://install.python-poetry.org | python3 -
 
-# Copy Pipfile and Pipfile.lock and Pipenv Sync (use pipenv.lock more accurate)
+# Copy potery pyproject.toml file into docker containter and install it
 COPY pyproject.toml ./
 RUN poetry install --no-root --only main
 

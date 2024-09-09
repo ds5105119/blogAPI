@@ -1,6 +1,3 @@
-from django.urls.converters import StringConverter
-
-
 class HandleConverter:
     regex = r"[\w.@+-]+"
 

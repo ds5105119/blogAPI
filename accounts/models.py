@@ -25,7 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    is_public = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     follows_count = models.IntegerField(default=0)
@@ -36,6 +36,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "handle"
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = ["email"]
-
-    class Meta:
-        db_table = "user"

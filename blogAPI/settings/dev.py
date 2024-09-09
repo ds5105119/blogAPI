@@ -4,6 +4,7 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+WSGI_APPLICATION = "blogAPI.wsgi.dev.application"
 
 ALLOWED_HOSTS = []
 

@@ -6,10 +6,9 @@ from accounts.serializers import CustomSocialLoginSerializer, UserSerializer
 try:
     from django.conf import settings
     from django.shortcuts import get_object_or_404
-    from rest_framework import status, viewsets
-    from rest_framework.permissions import AllowAny
+    from rest_framework import generics, status, permissions, viewsets
     from rest_framework.response import Response
-    from rest_framework.views import APIView
+    from rest_framework.serializers import ValidationError
     from dj_rest_auth.registration.views import SocialLoginView
     from allauth.socialaccount.providers.oauth2.client import OAuth2Client
     from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -30,26 +29,12 @@ class GoogleLogin(SocialLoginView):
     serializer_class = CustomSocialLoginSerializer
 
 
-class UserHandleCreateView(APIView):
+class UserHandleCreateView(generics.UpdateAPIView):
     """
     POST /accounts/handle/: {handle: string} Change Owner's Handle
     """
 
     permission_classes = (HandlePermission,)
-
-    def put(self, request, *args, **kwargs):
-        handle = request.POST.get("handle", None)
-        if not handle:
-            return Response(
-                {"error": "handle not provided"}, status=status.HTTP_400_BAD_REQUEST
-            )
-
-        if User.objects.filter(handle=handle).exists():
-            return Response(
-                {"error": "User handle already exists"}, status=status.HTTP_409_CONFLICT
-            )
-
-        return Response({}, status=status.HTTP_200_OK)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -60,7 +45,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     GET /accounts/users/{handle}/: 특정 handle을 가진 사용자의 상세 정보를 반환
     """
 
-    permission_classes = (AllowAny,)
+    permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = UserPagination

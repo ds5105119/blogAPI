@@ -1,5 +1,5 @@
 from profiles.models import Profile
-from profiles.serializers import ProfileSerializer
+from profiles.serializers import ProfileExternalSerializer
 
 try:
     from django.db.models import Q
@@ -39,7 +39,7 @@ class PublicProfileDetailView(APIView):
         profile = get_object_or_404(
             Profile.objects.select_related("user"), user__handle=handle
         )
-        serializer = ProfileSerializer(profile)
+        serializer = ProfileExternalSerializer(profile)
         return Response(serializer.data)
 
 
@@ -50,7 +50,7 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     """
 
     permission_classes = [AllowAny]
-    serializer_class = ProfileSerializer
+    serializer_class = ProfileExternalSerializer
     lookup_field = "pk"
 
     def get_queryset(self):

@@ -1,4 +1,4 @@
-from profiles.views import ProfileViewSet, ProfileDetailView
+from profiles.views import ProfileViewSet, PublicProfileDetailView
 
 try:
     from django.urls import path, include
@@ -13,5 +13,5 @@ router = DefaultRouter()
 router.register(r"", ProfileViewSet, basename="profile")
 
 urlpatterns = [
-    path("detail/", ProfileDetailView.as_view(), name="profile-detail"),
+    path("detail/", PublicProfileDetailView.as_view(), name="profile-detail"),
 ]

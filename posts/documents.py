@@ -1,5 +1,3 @@
-from django.db import models
-
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from posts.models import Category, Post
@@ -30,7 +28,7 @@ class PostDocument(Document):
         model = Post  # The model associated with this Document
 
         # The fields of the model you want to be indexed in Elasticsearch
-        fields = ["title", "excerpt"]
+        fields = ["mdx", "text"]
         related_models = [User, Category]
 
         # Ignore auto updating of Elasticsearch when a model is saved
